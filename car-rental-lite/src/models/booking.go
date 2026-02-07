@@ -22,7 +22,6 @@ type Booking struct {
 	CreatedAt  time.Time
 }
 
-// AvailabilitySlot represents a time range when a car is available for booking
 type AvailabilitySlot struct {
 	ID        string
 	CarID     string
