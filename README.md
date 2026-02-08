@@ -29,7 +29,7 @@ A rate limiter implementation supporting multiple algorithms (Token Bucket, Leak
 *   **Documentation**:
     *   [Requirements](rate-limiter/requirement.md)
     *   [Architecture Diagrams](rate-limiter/diagrams/architecture.md)
-    *   [Components] (rate-limiter/components.md)
+    *   [Components](rate-limiter/components.md)
     *   [Sequence Diagrams](rate-limiter/diagrams/sequence.md)
     *   [Design Trade-offs](rate-limiter/tradeoff.md)
     *   [Pattern Discussion](rate-limiter/patterns.md)
