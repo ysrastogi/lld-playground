@@ -1,106 +1,140 @@
+# Rate Limiter Architecture
+
+## Overview
+
+A flexible, extensible rate limiting system designed using **Strategy Pattern** and **Interface Segregation** principles. The system supports multiple rate limiting algorithms (Token Bucket, Leaky Bucket, Fixed/Sliding/Rolling Window) with centralized state management and algorithm-agnostic orchestration.
+
+## System Architecture
+
 ```mermaid
 classDiagram
 
 %% ===== INPUTS =====
 class RequestContext {
-  +userId
-  +apiKey
-  +IpAddress : list
+  +UserID string
+  +ApiKey string
+  +IpAddress string
+  +SetUserID(id string)
+  +SetAPIKey(key string)
+  +SetIPAddress(ip string)
 }
 
-class RateLimitPolicy {
-  +requests
-  +timeframe
-  +maxBurst
-  +concurrentRequest
-  +entityType
+class LimitPolicy {
+  +Requests int
+  +Timeframe Duration
+  +MaxBurst int
+  +ConcurrentRequests int
+  +Entity entityType
+  +SetRequests(r int)
+  +SetTimeframe(t Duration)
+  +SetMaxBurst(b int)
+  +SetEntity(e entityType)
 }
 
 %% ===== CORE INTERFACE =====
-class RateLimiterRule {
+class LimiterRule {
   <<interface>>
-  Allow(context, state, policy) bool
+  +GetKey(ctx RequestContext) string
+  +Evaluate(ctx, state, policy) (bool, *LimiterState)
 }
 
 %% ===== STATE STORE =====
 class StateStore {
-  Get(key string) (LimiterState, error)
-  Set(key string, state LimiterState) error
+  -mu RWMutex
+  -data map[string]*LimiterState
+  +GetState(key string) *LimiterState
+  +SetState(key string, state *LimiterState)
+  +NewStateStore() *StateStore
 }
 
-%% ===== STATE INTERFACE =====
+%% ===== STATE STRUCT =====
 class LimiterState {
-  <<interface>>
+  +TokenBucket TokenBucketState
+  +LeakyBucket LeakyBucketState
 }
 
 %% ===== STATE IMPLEMENTATIONS =====
 class TokenBucketState {
-  Tokens : int
-  LastRefill : Timestamp
+  +Tokens int
+  +LastRefillTime Timestamp
 }
 
 class LeakyBucketState {
-  Level : int
-  LastLeak : Timestamp
+  +Water int
+  +LastLeakTime Timestamp
 }
 
 class FixedWindowState {
-  windowStart : Timestamp
-  Count : int
+  +WindowStart Timestamp
+  +Count int
 }
 
 class SlidingWindowState {
+  +Windows []Window
 }
 
 class RollingWindowState {
-  timestamp : Timestamp
+  +Timestamps []Timestamp
 }
 
-LimiterState <|-- TokenBucketState
-LimiterState <|-- LeakyBucketState
-LimiterState <|-- FixedWindowState
-LimiterState <|-- SlidingWindowState
-LimiterState <|-- RollingWindowState
-
-LimiterState --> StateStore : stored_in
+LimiterState *-- TokenBucketState
+LimiterState *-- LeakyBucketState
+StateStore --> LimiterState : stores
 
 %% ===== LIMITER IMPLEMENTATIONS =====
-class TokenBucket {
-  Allow(context, state, policy) bool
+class TokenBucketRule {
+  -mu RWMutex
+  +LimitPolicy LimitPolicy
+  +GetKey(ctx) string
+  +Evaluate(ctx, state, policy) (bool, *LimiterState)
 }
 
-class LeakyBucket {
-  Allow(context, state, policy) bool
+class LeakyBucketRule {
+  -mu RWMutex
+  +LimitPolicy LimitPolicy
+  +GetKey(ctx) string
+  +Evaluate(ctx, state, policy) (bool, *LimiterState)
 }
 
-class FixedWindow {
-  Allow(context, state, policy) bool
+class FixedWindowRule {
+  +GetKey(ctx) string
+  +Evaluate(ctx, state, policy) (bool, *LimiterState)
 }
 
-class SlidingWindow {
-  Allow(context, state, policy) bool
+class SlidingWindowRule {
+  +GetKey(ctx) string
+  +Evaluate(ctx, state, policy) (bool, *LimiterState)
 }
 
-class RollingWindow {
-  Allow(context, state, policy) bool
+class RollingWindowRule {
+  +GetKey(ctx) string
+  +Evaluate(ctx, state, policy) (bool, *LimiterState)
 }
 
-RateLimiterRule <|-- TokenBucket
-RateLimiterRule <|-- LeakyBucket
-RateLimiterRule <|-- FixedWindow
-RateLimiterRule <|-- SlidingWindow
-RateLimiterRule <|-- RollingWindow
+LimiterRule <|.. TokenBucketRule : implements
+LimiterRule <|.. LeakyBucketRule : implements
+LimiterRule <|.. FixedWindowRule : implements
+LimiterRule <|.. SlidingWindowRule : implements
+LimiterRule <|.. RollingWindowRule : implements
 
-RateLimiterRule --> LimiterState : uses
-RateLimiterRule --> RequestContext
-RateLimiterRule --> RateLimitPolicy
+LimiterRule ..> LimiterState : uses
+LimiterRule ..> RequestContext : reads
+LimiterRule ..> LimitPolicy : enforces
+
 %% ===== ORCHESTRATOR =====
-
-class RateLimiterOrchestrator{
-
+class RateLimiterOrchestrator {
+  -stateStore *StateStore
+  -rule LimiterRule
+  -policy LimitPolicy
+  +NewRateLimiterOrchestrator() *RateLimiterOrchestrator
+  +Allow(ctx RequestContext) bool
+  +SetPolicy(policy LimitPolicy)
+  +SetRule(rule LimiterRule)
 }
-RateLimiterOrchestrator --> LimiterState : uses
-RateLimiterOrchestrator --> RequestContext: consumes
-RateLimiterOrchestrator --> RateLimitPolicy: uses
-RateLimiterOrchestrator --> RateLimiterRule: uses
+
+RateLimiterOrchestrator *-- StateStore : contains
+RateLimiterOrchestrator *-- LimiterRule : uses
+RateLimiterOrchestrator *-- LimitPolicy : applies
+RateLimiterOrchestrator ..> RequestContext : processes
+RateLimiterOrchestrator ..> LimiterState : manages
 ```
