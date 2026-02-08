@@ -18,13 +18,30 @@ A simplified car rental system implementation (like Turo or Airbnb for cars).
     *   [Architecture Diagrams](car-rental-lite/diagrams/)
     *   [Design Trade-offs](car-rental-lite/tradeoff.md)
 
+### 2. [Rate Limiter](rate-limiter/)
+A rate limiter implementation supporting multiple algorithms (Token Bucket, Leaky Bucket, Fixed Window, Sliding Window, Rolling Window).
+*   **Language**: Go
+*   **Key Concepts**:
+    *   Rate Limiting Algorithms
+    *   State Management
+    *   Orchestrator Pattern
+    *   In-Memory State Store
+*   **Documentation**:
+    *   [Requirements](rate-limiter/requirement.md)
+    *   [Architecture Diagrams](rate-limiter/diagrams/architecture.md)
+    *   [Components] (rate-limiter/components.md)
+    *   [Sequence Diagrams](rate-limiter/diagrams/sequence.md)
+    *   [Design Trade-offs](rate-limiter/tradeoff.md)
+    *   [Pattern Discussion](rate-limiter/patterns.md)
+
+
 ## Goals
 *   Implement common LLD interview problems.
 *   Experiment with different design patterns.
 *   Document tradeoffs between different implementation approaches.
 *   Future Projects:
     - [x] Car Rental System
-    - [ ] Rate Limiter
+    - [x] Rate Limiter
     - [ ] LRU Cache
     - [ ] LFU Cache
     - [ ] URL Shortener
