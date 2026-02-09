@@ -34,6 +34,19 @@ A rate limiter implementation supporting multiple algorithms (Token Bucket, Leak
     *   [Design Trade-offs](rate-limiter/tradeoff.md)
     *   [Pattern Discussion](rate-limiter/patterns.md)
 
+### 3. [LRU Cache](lru-cache/)
+An implementation of a Least Recently Used (LRU) Cache.
+*   **Language**: Go
+*   **Key Concepts**:
+    *   LRU Eviction Policy
+    *   Doubly Linked List for Usage Tracking
+    *   Hash Map for O(1) Access
+    *   Thread Safety for Concurrent Access
+*   **Documentation**:
+    *   [Requirements](lru-cache/requirements.md)
+    *   [Architecture Diagrams](lru-cache/diagrams/architecture.md)
+    *   [Components](lru-cache/components.md)
+
 
 ## Goals
 *   Implement common LLD interview problems.
@@ -42,7 +55,7 @@ A rate limiter implementation supporting multiple algorithms (Token Bucket, Leak
 *   Future Projects:
     - [x] Car Rental System
     - [x] Rate Limiter
-    - [ ] LRU Cache
+    - [x] LRU Cache
     - [ ] LFU Cache
     - [ ] URL Shortener
     - [ ] Notification System
