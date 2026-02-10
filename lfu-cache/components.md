@@ -1,0 +1,7 @@
+# Components
+The `lru-cache` package is built on top of a few core components that work together to provide efficient caching functionality. These components include:
+1. **Cache Class**: This is the main class that implements the LRU cache functionality. It manages the storage of key-value pairs, handles cache operations (get and put), and maintains the order of usage for eviction purposes.
+2. **Doubly Linked List**: This component is used to maintain the order of usage for the cache items. It allows for efficient eviction of the least recently used item when the cache reaches its capacity. Each node in the list represents a cache item and contains pointers to the previous and next nodes.
+3. **Hash Map**: This component is used to store the key-value pairs in the cache. It allows for O(1) time complexity for get and put operations by providing direct access to the cache items based on their keys. The hash map also stores references to the corresponding nodes in the doubly linked list to facilitate quick updates to the usage order.
+4. **Eviction Policy**: This component implements the logic for evicting items from the cache when the capacity is exceeded. In this case, it follows the Least Recently Used (LRU) eviction policy, which evicts the item that has not been accessed for the longest time. The eviction policy interacts with the doubly linked list to identify and remove the least recently used item when necessary.
+5. **Concurrency Control**: This component ensures that the cache can be safely accessed by multiple threads simultaneously without
