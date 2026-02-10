@@ -47,6 +47,20 @@ An implementation of a Least Recently Used (LRU) Cache.
     *   [Architecture Diagrams](lru-cache/diagrams/architecture.md)
     *   [Components](lru-cache/components.md)
 
+### 4. [LFU Cache](lfu-cache/)
+An implementation of a Least Frequently Used (LFU) Cache.
+*   **Language**: Go
+*   **Key Concepts**:
+    *   LFU Eviction Policy
+    *   Frequency Tracking
+    *   Doubly Linked List for Usage Tracking
+    *   Hash Map for O(1) Access
+    *   Thread Safety for Concurrent Access
+*   **Documentation**:
+    *   [Requirements](lfu-cache/requirements.md)
+    *   [Architecture Diagrams](lfu-cache/diagrams/architecture.md)
+    *   [Components](lfu-cache/components.md)
+
 
 ## Goals
 *   Implement common LLD interview problems.
@@ -56,7 +70,7 @@ An implementation of a Least Recently Used (LRU) Cache.
     - [x] Car Rental System
     - [x] Rate Limiter
     - [x] LRU Cache
-    - [ ] LFU Cache
+    - [x] LFU Cache
     - [ ] URL Shortener
     - [ ] Notification System
     - [ ] InMemory Cache
