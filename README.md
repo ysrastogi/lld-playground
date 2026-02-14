@@ -61,6 +61,21 @@ An implementation of a Least Frequently Used (LFU) Cache.
     *   [Architecture Diagrams](lfu-cache/diagrams/architecture.md)
     *   [Components](lfu-cache/components.md)
 
+### 5. [URL Shortener](url-shortener/)
+An implementation of a URL shortener service.
+*   **Language**: Go
+*   **Key Concepts**:
+    *   URL Shortening
+    *   Rate Limiting
+    *   Caching
+    *   Analytics
+*   **Documentation**:
+    *   [Requirements](url-shortener/requirements.md)
+    *   [Architecture Diagrams](url-shortener/diagrams/architecture.md)
+    *   [Components](url-shortener/components.md)
+    *   [Sequence Diagrams](url-shortener/diagrams/sequence.md)
+    *   [Design Trade-offs](url-shortener/tradeoff.md)
+    *   [Pattern Discussion](url-shortener/patterns.md)
 
 ## Goals
 *   Implement common LLD interview problems.
@@ -71,7 +86,7 @@ An implementation of a Least Frequently Used (LFU) Cache.
     - [x] Rate Limiter
     - [x] LRU Cache
     - [x] LFU Cache
-    - [ ] URL Shortener
+    - [x] URL Shortener
     - [ ] Notification System
     - [ ] InMemory Cache
     - [ ] Payment Flow
