@@ -1,0 +1,5 @@
+redis:
+  redis_url: "localhost:6379"
+
+database:
+  db_path: "url_shortener.db"
