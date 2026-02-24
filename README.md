@@ -79,16 +79,15 @@ An implementation of a URL shortener service.
     *   [Pattern Discussion](url-shortener/patterns.md)
 
 ### 6. [Notification System](notification_system/)
-An implementation of a notification system.
+A highly concurrent multi-channel notification dispatcher with rate limiting and idempotency.
 *   **Language**: Go
 *   **Key Concepts**:
-    *   Notification System
-    *   Rate Limiting
-    *   Caching
-    *   Analytics
+    *   Pub/Sub Architecture
+    *   Concurrency & Worker Pools
+    *   Rate Limiting & Idempotency
+    *   Retry Mechanisms & Dead Letter Queues
 *   **Documentation**:
     *   [Requirements](notification_system/requirements.md)
-    *   [Architecture Diagrams](notification_system/diagrams/architecture.png)
     *   [Components](notification_system/components.md)
     *   [Sequence Diagrams](notification_system/diagrams/sequence.md)
     *   [Design Trade-offs](notification_system/tradeoff.md)
