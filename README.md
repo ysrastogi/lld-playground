@@ -67,8 +67,9 @@ An implementation of a URL shortener service.
 *   **Key Concepts**:
     *   URL Shortening
     *   Rate Limiting
-    *   Caching
-    *   Analytics
+    *   Pub Sub Messaging
+    *   Idempotency
+    *   Retry Infrastructure
 *   **Documentation**:
     *   [Requirements](url-shortener/requirements.md)
     *   [Architecture Diagrams](url-shortener/diagrams/architecture.md)
@@ -76,6 +77,22 @@ An implementation of a URL shortener service.
     *   [Sequence Diagrams](url-shortener/diagrams/sequence.md)
     *   [Design Trade-offs](url-shortener/tradeoff.md)
     *   [Pattern Discussion](url-shortener/patterns.md)
+
+### 6. [Notification System](notification_system/)
+An implementation of a notification system.
+*   **Language**: Go
+*   **Key Concepts**:
+    *   Notification System
+    *   Rate Limiting
+    *   Caching
+    *   Analytics
+*   **Documentation**:
+    *   [Requirements](notification_system/requirements.md)
+    *   [Architecture Diagrams](notification_system/diagrams/architecture.png)
+    *   [Components](notification_system/components.md)
+    *   [Sequence Diagrams](notification_system/diagrams/sequence.md)
+    *   [Design Trade-offs](notification_system/tradeoff.md)
+    *   [Pattern Discussion](notification_system/patterns.md)
 
 ## Goals
 *   Implement common LLD interview problems.
@@ -87,7 +104,7 @@ An implementation of a URL shortener service.
     - [x] LRU Cache
     - [x] LFU Cache
     - [x] URL Shortener
-    - [ ] Notification System
+    - [x] Notification System
     - [ ] InMemory Cache
     - [ ] Payment Flow
     - [ ] Job Scheduler
