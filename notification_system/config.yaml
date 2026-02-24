@@ -1,0 +1,5 @@
+database:
+  db_path: "notification_system.db"
+
+redis:
+  redis_url: "redis://localhost:6378"
